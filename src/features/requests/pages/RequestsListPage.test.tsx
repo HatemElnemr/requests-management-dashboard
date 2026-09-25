@@ -194,7 +194,7 @@ describe("RequestsListPage row actions", () => {
 
     const row = rowFor("Request title 1");
     fireEvent.click(statusTriggerIn(row));
-    fireEvent.click(screen.getByRole("option", { name: /completed/ }));
+    fireEvent.click(screen.getByRole("option", { name: /Completed/ }));
 
     await waitFor(() =>
       expect(api.updateRequestStatus).toHaveBeenCalledWith("REQ-1", "completed"),
@@ -209,7 +209,7 @@ describe("RequestsListPage row actions", () => {
 
     const row = rowFor("Request title 1");
     fireEvent.click(statusTriggerIn(row));
-    fireEvent.click(screen.getByRole("option", { name: /completed/ }));
+    fireEvent.click(screen.getByRole("option", { name: /Completed/ }));
 
     expect(
       await screen.findByText(/Could not update status/),

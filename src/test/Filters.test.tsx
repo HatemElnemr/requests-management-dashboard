@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { ActiveFilters } from "@/features/requests/components/ActiveFilters";
 import { InlineStatusSelect } from "@/features/requests/components/InlineStatusSelect";
 import { DiscardDialog } from "@/features/requests/components/DiscardDialog";
-import { STATUSES } from "@/features/requests/data/MockRequests";
+import { STATUSES, STATUS_LABELS } from "@/features/requests/data/MockRequests";
 import type { FilterChip } from "@/features/requests/types/requests";
 
 const chips: FilterChip[] = [
@@ -51,11 +51,32 @@ describe("ActiveFilters", () => {
 });
 
 describe("InlineStatusSelect", () => {
+  it("shows the current status as a readable label, not the raw value", () => {
+    render(
+      <InlineStatusSelect value="in_progress" statuses={STATUSES} onChange={vi.fn()} />,
+    );
+    const text = screen.getByRole("button").textContent ?? "";
+
+    expect(text).toContain("In Progress");
+    // the snake_case wire value must never reach the screen
+    expect(text).not.toContain("in_progress");
+  });
+
+  it("namespaces every status with its label", () => {
+    for (const status of STATUSES) {
+      const { unmount } = render(
+        <InlineStatusSelect value={status} statuses={STATUSES} onChange={vi.fn()} />,
+      );
+      expect(screen.getByRole("button").textContent).toContain(STATUS_LABELS[status]);
+      unmount();
+    }
+  });
+
   it("shows the current status", () => {
     render(
       <InlineStatusSelect value="in_progress" statuses={STATUSES} onChange={vi.fn()} />,
     );
-    expect(screen.getByRole("button").textContent).toContain("in_progress");
+    expect(screen.getByRole("button").textContent).toContain(STATUS_LABELS.in_progress);
   });
 
   it("starts closed and opens on click", () => {
@@ -76,7 +97,7 @@ describe("InlineStatusSelect", () => {
     fireEvent.click(screen.getByRole("button"));
 
     for (const status of STATUSES) {
-      expect(screen.getByRole("option", { name: new RegExp(status) })).toBeTruthy();
+      expect(screen.getByRole("option", { name: new RegExp(STATUS_LABELS[status]) })).toBeTruthy();
     }
   });
 
@@ -87,7 +108,7 @@ describe("InlineStatusSelect", () => {
     );
     fireEvent.click(screen.getByRole("button"));
 
-    fireEvent.click(screen.getByRole("option", { name: /completed/ }));
+    fireEvent.click(screen.getByRole("option", { name: /Completed/ }));
 
     expect(onChange).toHaveBeenCalledWith("completed");
     expect(screen.queryByRole("listbox")).toBeNull();
@@ -96,7 +117,7 @@ describe("InlineStatusSelect", () => {
   it("works without an onChange handler", () => {
     render(<InlineStatusSelect value="open" statuses={STATUSES} />);
     fireEvent.click(screen.getByRole("button"));
-    fireEvent.click(screen.getByRole("option", { name: /completed/ }));
+    fireEvent.click(screen.getByRole("option", { name: /Completed/ }));
     expect(screen.queryByRole("listbox")).toBeNull();
   });
 

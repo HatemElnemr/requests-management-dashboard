@@ -1,5 +1,6 @@
 import type { ElementType } from "react";
 import { ArrowDown, Diamond, ArrowUp, Flag } from "lucide-react";
+import { STATUS_LABELS, PRIORITY_LABELS } from "@/features/requests/data/MockRequests";
 import type {
   RequestStatus,
   RequestPriority,
@@ -42,7 +43,8 @@ export function StatusBadge({ status }: { status: RequestStatus }) {
       className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs font-medium border whitespace-nowrap ${cfg.bg} ${cfg.text} ${cfg.border}`}
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${cfg.dot}`} />
-      {status}
+      {/* نعرض التسمية المقروءة ونُبقي القيمة الخام في البيانات و الـ URL */}
+      {STATUS_LABELS[status]}
     </span>
   );
 }
@@ -64,7 +66,7 @@ export function PriorityBadge({ priority }: { priority: RequestPriority }) {
       className={`inline-flex items-center gap-1 text-xs font-medium ${textClass}`}
     >
       <Icon className="w-3 h-3" />
-      {priority}
+      {PRIORITY_LABELS[priority]}
     </span>
   );
 }
