@@ -15,6 +15,11 @@
 
 ---
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Click_Here-007ACC?style=for-the-badge&logo=vercel&logoColor=white)](https://requests-management-dashboard.vercel.app/)
+[![GitHub Repository](https://img.shields.io/badge/GitHub_Repo-View_Code-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/HatemElnemr/requests-management-dashboard)
+
+---
+
 ## Table of Contents
 
 1. [Executive Summary](#1-executive-summary)
