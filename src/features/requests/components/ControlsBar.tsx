@@ -77,7 +77,7 @@ export function ControlsBar({
           value={query}
           onChange={(e) => handleSearchInput(e.target.value)}
           aria-label="Search requests"
-          className="w-full h-8 pl-8 pr-3 text-sm text-gray-900 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400 transition-all placeholder-gray-400"
+          className="w-full h-8 pl-8 pr-3 text-sm [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none text-gray-900 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400 transition-all placeholder-gray-400"
           placeholder="Search by title, owner or ID..."
         />
         {query && (
